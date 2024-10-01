@@ -27,4 +27,4 @@ public class PloggingViewResponseDto {
 
     private Long userId;
 
-}
+};

@@ -19,4 +19,4 @@ public class TotalViewResponseDto {
     private int totalCount;
 
     private Long userId;
-}
+};
