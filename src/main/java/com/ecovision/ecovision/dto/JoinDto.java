@@ -12,4 +12,4 @@ public class JoinDto {
     private String username;
 
     private String password;
-};
+}
