@@ -28,5 +28,5 @@ public class User {
     private List<Plogging> ploggingEntities = new ArrayList<>();
 
    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private TotalView totalView;
+    private TotalView totalView;;
 }

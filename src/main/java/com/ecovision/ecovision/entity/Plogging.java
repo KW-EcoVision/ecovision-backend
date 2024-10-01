@@ -32,5 +32,5 @@ public class Plogging {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user;;
 }
