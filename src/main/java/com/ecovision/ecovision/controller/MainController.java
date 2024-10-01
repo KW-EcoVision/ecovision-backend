@@ -30,6 +30,6 @@ public class MainController {
         return "Main Controller : " + username + role;
 
 
-    };
+    }
 
 }
