@@ -37,5 +37,5 @@ public class JoinService {
         data.setRole("ROLE_ADMIN"); //어드민 권한 주기.
 
         userRepository.save(data);
-    };
+    }
 }
