@@ -25,4 +25,4 @@ public class PloggingResponseDto {
     private LocalDateTime timeStamp;
 
     private Long userId;
-};
+}

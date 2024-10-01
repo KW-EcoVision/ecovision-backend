@@ -22,4 +22,4 @@ public class PloggingRequestDto {
 
     private Long userId;
 
-};
+}
