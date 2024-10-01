@@ -13,6 +13,6 @@ public class AdminController {
     public String adminP() {
 
         return "Admin Controller";
-    }
+    };
 
 }
