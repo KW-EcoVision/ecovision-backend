@@ -9,6 +9,6 @@ public class TotalViewService {
     private final TotalViewRepository totalViewRepository;
     public TotalViewService(TotalViewRepository totalViewRepository) {
         this.totalViewRepository = totalViewRepository;
-    }
+    };
 
 }
