@@ -45,7 +45,7 @@ public class PloggingService {
                 user.getId() // 유저 ID 포함
         );
 
-    };
+    }
 
 }
 
