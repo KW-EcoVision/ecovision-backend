@@ -8,7 +8,9 @@ import com.ecovision.ecovision.repository.PloggingRepository;
 import com.ecovision.ecovision.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 @Service
@@ -42,10 +44,24 @@ public class PloggingService {
                 plogging.getLocation(),
                 plogging.getTime(),
                 plogging.getTimeStamp(),
-                user.getId() // 유저 ID 포함
+                plogging.getUser().getId() // 유저 ID 포함
         );
 
     }
 
-}
+    public PloggingResponseDto ploggingViewById(Long id) {
+        Plogging plogging = ploggingRepository.findById(id).orElseThrow(()->new NullPointerException("기록이 존재하지 않습니다."));
+        return new PloggingResponseDto(
+                plogging.getId(),
+                plogging.getDistance(),
+                plogging.getTrashCount(),
+                plogging.getLocation(),
+                plogging.getTime(),
+                plogging.getTimeStamp(),
+                plogging.getUser().getId() // 유저 ID 포함
+        );
 
+
+
+    }
+}
