@@ -24,7 +24,7 @@ public class PloggingService {
     public PloggingResponseDto createPlogging(PloggingRequestDto ploggingRequestDto) {
         // 유저 찾기
         User user = userRepository.findById(ploggingRequestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+                .orElseThrow(() -> new IllegalArgumentException("유저 ID 가 존재하지않습니다."));
 
         Plogging plogging = new Plogging();
         plogging.setDistance(ploggingRequestDto.getDistance());
