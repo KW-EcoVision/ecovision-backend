@@ -4,7 +4,6 @@ package com.ecovision.ecovision.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class PloggingViewResponseDto {
+
 
     private Long id;
 
@@ -26,5 +26,6 @@ public class PloggingViewResponseDto {
     private LocalDateTime timeStamp;
 
     private Long userId;
+
 
 }
