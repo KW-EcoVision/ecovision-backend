@@ -28,7 +28,7 @@ public class PloggingController {
         return ResponseEntity.ok(responseDto);
     }
     //회차별 기록 조회
-    @GetMapping("/viewbyid")
+    @GetMapping("/view")
     public ResponseEntity<?> view(@RequestParam(name = "id") Long id) {
         try {
             PloggingResponseDto response = ploggingService.ploggingViewById(id);
@@ -38,7 +38,7 @@ public class PloggingController {
         }
     }
     //username -> plgging view list
-    @GetMapping("/listviewbyusername")
+    @GetMapping("/listview")
     public ResponseEntity<?> listView(@RequestParam(name = "username") String username) {
         try {
             List<PloggingViewResponseDto> response = ploggingService.ploggingListViewByUsername(username);
@@ -48,7 +48,7 @@ public class PloggingController {
         }
     }
     //username -> plogging total view ( 모든 회차 합 )
-    @GetMapping("/totalviewbyusername")
+    @GetMapping("/totalview")
     public ResponseEntity<?> totalView(@RequestParam(name = "username") String username) {
         try {
             TotalViewResponseDto response = totalViewService.ploggingTotalViewByUsername(username);
