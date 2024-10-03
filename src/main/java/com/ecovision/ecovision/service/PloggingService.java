@@ -2,13 +2,14 @@ package com.ecovision.ecovision.service;
 
 import com.ecovision.ecovision.dto.PloggingRequestDto;
 import com.ecovision.ecovision.dto.PloggingResponseDto;
+import com.ecovision.ecovision.dto.PloggingViewResponseDto;
 import com.ecovision.ecovision.entity.Plogging;
 import com.ecovision.ecovision.entity.User;
 import com.ecovision.ecovision.repository.PloggingRepository;
 import com.ecovision.ecovision.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
+import java.util.List;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -17,16 +18,19 @@ import java.util.ArrayList;
 public class PloggingService {
 
     private final PloggingRepository ploggingRepository;
-    private final UserRepository userRepository; // UserRepository 추가
+    private final UserRepository userRepository;
 
     public PloggingService(PloggingRepository ploggingRepository, UserRepository userRepository) {
         this.ploggingRepository = ploggingRepository;
-        this.userRepository = userRepository; // UserRepository 초기화
+        this.userRepository = userRepository;
     }
+
+    //기록 생성 서비스
     public PloggingResponseDto createPlogging(PloggingRequestDto ploggingRequestDto) {
         // 유저 찾기
         User user = userRepository.findById(ploggingRequestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저 ID 가 존재하지않습니다."));
+
 
         Plogging plogging = new Plogging();
         plogging.setDistance(ploggingRequestDto.getDistance());
@@ -34,7 +38,7 @@ public class PloggingService {
         plogging.setTime(ploggingRequestDto.getTime());
         plogging.setLocation(ploggingRequestDto.getLocation());
         plogging.setTimeStamp(LocalDateTime.now());
-        plogging.setUser(user); // 유저 설정
+        plogging.setUser(user);
         ploggingRepository.save(plogging);
 
         return new PloggingResponseDto(
@@ -44,11 +48,12 @@ public class PloggingService {
                 plogging.getLocation(),
                 plogging.getTime(),
                 plogging.getTimeStamp(),
-                plogging.getUser().getId() // 유저 ID 포함
+                plogging.getUser().getId()
         );
 
     }
 
+    //회차별 기록 조회
     public PloggingResponseDto ploggingViewById(Long id) {
         Plogging plogging = ploggingRepository.findById(id).orElseThrow(()->new NullPointerException("기록이 존재하지 않습니다."));
         return new PloggingResponseDto(
@@ -60,8 +65,32 @@ public class PloggingService {
                 plogging.getTimeStamp(),
                 plogging.getUser().getId() // 유저 ID 포함
         );
-
-
-
     }
+
+    //username -> 모든 기록 조회
+    public List<PloggingViewResponseDto> ploggingListViewByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new NullPointerException("아이디가 존재하지 않습니다.");
+        }
+
+        List<Plogging> ploggingList = user.getPloggingEntities();
+        List<PloggingViewResponseDto> responseDtoList = new ArrayList<>();
+
+        for (Plogging plogging : ploggingList) {
+            PloggingViewResponseDto responseDto = new PloggingViewResponseDto(
+                    plogging.getId(),
+                    plogging.getDistance(),
+                    plogging.getTrashCount(),
+                    plogging.getLocation(),
+                    plogging.getTime(),
+                    plogging.getTimeStamp(),
+                    plogging.getUser().getId()
+            );
+            responseDtoList.add(responseDto);
+        }
+
+        return responseDtoList;
+    }
+
 }
