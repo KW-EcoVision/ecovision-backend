@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//플로깅 기록 조회 dto -> 사실상 plogging response dto 랑 같음
 public class PloggingViewResponseDto {
 
 
@@ -24,8 +25,5 @@ public class PloggingViewResponseDto {
     private int time;
 
     private LocalDateTime timeStamp;
-
-    private Long userId;
-
 
 }

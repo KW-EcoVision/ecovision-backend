@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//plogging 기록 생성 request dto
 public class PloggingRequestDto {
 
     private int distance;
@@ -15,7 +16,5 @@ public class PloggingRequestDto {
     private String location;
 
     private int time;
-
-    private Long userId;
 
 }

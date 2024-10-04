@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//totalView (sum) response dto
 public class TotalViewResponseDto {
 
     private Long id;
@@ -18,5 +19,4 @@ public class TotalViewResponseDto {
 
     private int totalCount;
 
-    private Long userId;
 }

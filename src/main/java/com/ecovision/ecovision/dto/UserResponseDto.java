@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//User 정보 조회 등등
 public class UserResponseDto {
 
     private Long id;
@@ -16,5 +17,6 @@ public class UserResponseDto {
     private String name;
 
     private String password;
+
 
 }

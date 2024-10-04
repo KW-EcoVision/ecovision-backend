@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//기록 생성 응답 dto
 public class PloggingResponseDto {
 
 
@@ -22,8 +23,5 @@ public class PloggingResponseDto {
     private int time;
 
     private LocalDateTime timeStamp;
-
-    private Long userId;
-
 
 }
