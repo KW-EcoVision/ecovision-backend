@@ -7,6 +7,7 @@ import com.ecovision.ecovision.entity.Plogging;
 import com.ecovision.ecovision.entity.User;
 import com.ecovision.ecovision.repository.PloggingRepository;
 import com.ecovision.ecovision.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +28,11 @@ public class PloggingService {
 
     //기록 생성 서비스
     public PloggingResponseDto createPlogging(PloggingRequestDto ploggingRequestDto) {
-        // 유저 찾기
-        User user = userRepository.findById(ploggingRequestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("유저 ID 가 존재하지않습니다."));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username); //token
+        if (user == null) {
+            throw new NullPointerException("아이디가 존재하지 않습니다.");
+        }
 
 
         Plogging plogging = new Plogging();
@@ -47,13 +50,12 @@ public class PloggingService {
                 plogging.getTrashCount(),
                 plogging.getLocation(),
                 plogging.getTime(),
-                plogging.getTimeStamp(),
-                plogging.getUser().getId()
+                plogging.getTimeStamp()
         );
 
     }
 
-    //회차별 기록 조회
+    //회차별 기록 조회 (id)
     public PloggingResponseDto ploggingViewById(Long id) {
         Plogging plogging = ploggingRepository.findById(id).orElseThrow(()->new NullPointerException("기록이 존재하지 않습니다."));
         return new PloggingResponseDto(
@@ -62,19 +64,22 @@ public class PloggingService {
                 plogging.getTrashCount(),
                 plogging.getLocation(),
                 plogging.getTime(),
-                plogging.getTimeStamp(),
-                plogging.getUser().getId() // 유저 ID 포함
+                plogging.getTimeStamp()
         );
     }
 
-    //username -> 모든 기록 조회
-    public List<PloggingViewResponseDto> ploggingListViewByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+    //모든 기록 list 조회
+    public List<PloggingViewResponseDto> ploggingListViewByUsername() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username); //token
         if (user == null) {
             throw new NullPointerException("아이디가 존재하지 않습니다.");
         }
 
         List<Plogging> ploggingList = user.getPloggingEntities();
+        if (ploggingList == null) {
+            throw new NullPointerException("기록이 존재하지 않습니다.");
+        }
         List<PloggingViewResponseDto> responseDtoList = new ArrayList<>();
 
         for (Plogging plogging : ploggingList) {
@@ -84,13 +89,14 @@ public class PloggingService {
                     plogging.getTrashCount(),
                     plogging.getLocation(),
                     plogging.getTime(),
-                    plogging.getTimeStamp(),
-                    plogging.getUser().getId()
+                    plogging.getTimeStamp()
             );
             responseDtoList.add(responseDto);
         }
 
         return responseDtoList;
     }
+
+
 
 }
