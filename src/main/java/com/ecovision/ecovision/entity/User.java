@@ -10,6 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
+
+//User 관련 entity
 public class User {
 
     @Id
@@ -27,6 +29,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Plogging> ploggingEntities = new ArrayList<>();
 
-   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private TotalView totalView;
 }

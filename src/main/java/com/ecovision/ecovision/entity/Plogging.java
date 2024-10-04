@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
+
+
+//Plogging 관련 entity
 public class Plogging {
 
     @Id

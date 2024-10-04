@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "total_view")
+
+//total view 관련 entity
 public class TotalView {
 
     @Id
