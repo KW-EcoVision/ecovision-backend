@@ -49,7 +49,7 @@ public class UserService {
     }
 
     //회원 이름 수정
-    public UserResponseDto NameUpdateDetails(NameUpdateRequestDto nameUpdateRequestDto) {
+    public String NameUpdateDetails(NameUpdateRequestDto nameUpdateRequestDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -58,11 +58,11 @@ public class UserService {
 
         user.setName(nameUpdateRequestDto.getName());
 
-        return new UserResponseDto(user.getId(), user.getUsername(), user.getName(), user.getPassword());
+        return "이름 변경이 완료되었습니다.";
     }
 
     //회원 패스워드 수정
-    public UserResponseDto PasswordUpdateDetails(PasswordUpdateRequestDto passwordUpdateRequestDto) {
+    public String PasswordUpdateDetails(PasswordUpdateRequestDto passwordUpdateRequestDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -71,7 +71,7 @@ public class UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdateRequestDto.getPassword()));
 
-        return new UserResponseDto(user.getId(), user.getUsername(), user.getName(), user.getPassword());
+        return "패스워드 변경이 완료되었습니다.";
     }
 
 
@@ -84,7 +84,7 @@ public class UserService {
         }
         userRepository.deleteByUsername(username);
     }
-
+/* 안 쓸 거 같 음
     //회원 정보 조회
     public UserResponseDto UserView() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -95,5 +95,7 @@ public class UserService {
 
         return new UserResponseDto(user.getId(), user.getUsername(), user.getName(), user.getPassword());
     }
+    */
+
 }
 
