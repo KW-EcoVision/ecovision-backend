@@ -23,6 +23,7 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 //  중복검사 -> username 넘어오면 boolean is exist -> true or false -> 메세지
+    //회원 가입
     public String joinProcess(JoinDto joinDto) {
 
         String username = joinDto.getUsername();
