@@ -2,10 +2,7 @@ package com.ecovision.ecovision.service;
 
 
 
-import com.ecovision.ecovision.dto.JoinDto;
-import com.ecovision.ecovision.dto.NameUpdateRequestDto;
-import com.ecovision.ecovision.dto.PasswordUpdateRequestDto;
-import com.ecovision.ecovision.dto.UserResponseDto;
+import com.ecovision.ecovision.dto.*;
 import com.ecovision.ecovision.entity.User;
 import com.ecovision.ecovision.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,6 +71,16 @@ public class UserService {
         return "패스워드 변경이 완료되었습니다.";
     }
 
+    public String valiDateProcess(ValiDateDto valiDateDto) {
+        String username = valiDateDto.getUsername();
+        Boolean isExist = userRepository.existsByUsername(username);
+
+        if(isExist){
+            throw new NullPointerException("아이디가 이미 존재합니다.");
+        }
+
+        return "사용가능한 아이디입니다.";
+    }
 
     //유저 삭제
     public void userDelete() {
@@ -84,6 +91,7 @@ public class UserService {
         }
         userRepository.deleteByUsername(username);
     }
+
 /* 안 쓸 거 같 음
     //회원 정보 조회
     public UserResponseDto UserView() {
