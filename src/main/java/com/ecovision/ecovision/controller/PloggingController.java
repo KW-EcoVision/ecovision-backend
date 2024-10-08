@@ -45,7 +45,7 @@ public class PloggingController {
     }
 
     //유저 기록 리스트 조회
-    @GetMapping("/listview")
+    @GetMapping("/list-view")
     public ResponseEntity<?> listView() {
         try {
             List<PloggingViewResponseDto> response = ploggingService.ploggingListViewByUsername();
@@ -56,7 +56,7 @@ public class PloggingController {
     }
 
     //유저 모든 기록 합 조회
-    @GetMapping("/totalview")
+    @GetMapping("/total-view")
     public ResponseEntity<?> totalView() {
         try {
             TotalViewResponseDto response = totalViewService.ploggingTotalViewByUsername();
@@ -67,7 +67,7 @@ public class PloggingController {
     }
 
     //유저 모든 기록 합 + 기록 리스트 조회
-    @GetMapping("/totalandlistview")
+    @GetMapping("/total-and-list-view")
     public ResponseEntity<?> totalAndListView() {
         try {
             TotalViewAndPloggingListDto response = totalViewService.totalViewAndPloggingListByUsername();
