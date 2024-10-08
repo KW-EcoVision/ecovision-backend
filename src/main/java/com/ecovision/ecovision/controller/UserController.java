@@ -3,6 +3,7 @@ package com.ecovision.ecovision.controller;
 import com.ecovision.ecovision.dto.JoinDto;
 import com.ecovision.ecovision.dto.NameUpdateRequestDto;
 import com.ecovision.ecovision.dto.PasswordUpdateRequestDto;
+import com.ecovision.ecovision.dto.ValiDateDto;
 import com.ecovision.ecovision.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,16 @@ public class UserController {
     public ResponseEntity<?> JoinProcess(@RequestBody JoinDto joinDto) {
         try {
             String response = userService.joinProcess(joinDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/validate-id")
+    public ResponseEntity<?> ValiDateProcess(@RequestBody ValiDateDto valiDateDto) {
+        try {
+            String response = userService.valiDateProcess(valiDateDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
