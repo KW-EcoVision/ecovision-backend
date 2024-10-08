@@ -3,7 +3,7 @@ package com.ecovision.ecovision.controller;
 import com.ecovision.ecovision.dto.JoinDto;
 import com.ecovision.ecovision.dto.NameUpdateRequestDto;
 import com.ecovision.ecovision.dto.PasswordUpdateRequestDto;
-import com.ecovision.ecovision.dto.UserResponseDto;
+import com.ecovision.ecovision.dto.ValiDateDto;
 import com.ecovision.ecovision.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class UserController {
 
     //회원가입
     @PostMapping("/join")
-    public ResponseEntity<?> JoinProcess(JoinDto joinDto) {
+    public ResponseEntity<?> JoinProcess(@RequestBody JoinDto joinDto) {
         try {
             String response = userService.joinProcess(joinDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -30,6 +30,16 @@ public class UserController {
         }
     }
 
+    @PostMapping("/validate-id")
+    public ResponseEntity<?> ValiDateProcess(@RequestBody ValiDateDto valiDateDto) {
+        try {
+            String response = userService.valiDateProcess(valiDateDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+/* 안 쓸 거 같 음
     //유저 정보 조회
     @GetMapping("/userview")
     public ResponseEntity<?> getUserView() {
@@ -40,12 +50,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
+*/
     //유저 이름 수정
-    @PutMapping("/updatename")
+    @PutMapping("/update-name")
     public ResponseEntity<?> userNameUpdate(@RequestBody NameUpdateRequestDto nameUpdateRequestDto) {
         try {
-            UserResponseDto response = userService.NameUpdateDetails(nameUpdateRequestDto);
+            String response = userService.NameUpdateDetails(nameUpdateRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -53,10 +63,10 @@ public class UserController {
     }
 
     //유저 패스워드 수정
-    @PutMapping("/updatepassword")
+    @PutMapping("/update-password")
     public ResponseEntity<?> userPasswordUpdate(@RequestBody PasswordUpdateRequestDto passwordUpdateRequestDto) {
         try {
-            UserResponseDto response = userService.PasswordUpdateDetails(passwordUpdateRequestDto);
+            String response = userService.PasswordUpdateDetails(passwordUpdateRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

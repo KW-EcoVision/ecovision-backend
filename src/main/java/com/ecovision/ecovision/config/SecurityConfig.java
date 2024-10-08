@@ -61,7 +61,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join").permitAll() // /login, /, /join 은 모두 허용
+                        .requestMatchers("/login", "/", "/join", "/validate-id").permitAll() // /login, /, /join 은 모두 허용
                         .requestMatchers("/member").hasRole("Member") // /admin -> admin 역할 있어야됨
                         .anyRequest().authenticated()); //그 외 모든 요청 Authenticated 필요함
 

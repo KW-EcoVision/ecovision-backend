@@ -2,10 +2,7 @@ package com.ecovision.ecovision.service;
 
 
 
-import com.ecovision.ecovision.dto.JoinDto;
-import com.ecovision.ecovision.dto.NameUpdateRequestDto;
-import com.ecovision.ecovision.dto.PasswordUpdateRequestDto;
-import com.ecovision.ecovision.dto.UserResponseDto;
+import com.ecovision.ecovision.dto.*;
 import com.ecovision.ecovision.entity.User;
 import com.ecovision.ecovision.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +20,7 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 //  중복검사 -> username 넘어오면 boolean is exist -> true or false -> 메세지
+    //회원 가입
     public String joinProcess(JoinDto joinDto) {
 
         String username = joinDto.getUsername();
@@ -48,7 +46,7 @@ public class UserService {
     }
 
     //회원 이름 수정
-    public UserResponseDto NameUpdateDetails(NameUpdateRequestDto nameUpdateRequestDto) {
+    public String NameUpdateDetails(NameUpdateRequestDto nameUpdateRequestDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -57,11 +55,11 @@ public class UserService {
 
         user.setName(nameUpdateRequestDto.getName());
 
-        return new UserResponseDto(user.getId(), user.getUsername(), user.getName(), user.getPassword());
+        return "이름 변경이 완료되었습니다.";
     }
 
     //회원 패스워드 수정
-    public UserResponseDto PasswordUpdateDetails(PasswordUpdateRequestDto passwordUpdateRequestDto) {
+    public String PasswordUpdateDetails(PasswordUpdateRequestDto passwordUpdateRequestDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -70,9 +68,19 @@ public class UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdateRequestDto.getPassword()));
 
-        return new UserResponseDto(user.getId(), user.getUsername(), user.getName(), user.getPassword());
+        return "패스워드 변경이 완료되었습니다.";
     }
 
+    public String valiDateProcess(ValiDateDto valiDateDto) {
+        String username = valiDateDto.getUsername();
+        Boolean isExist = userRepository.existsByUsername(username);
+
+        if(isExist){
+            throw new NullPointerException("아이디가 이미 존재합니다.");
+        }
+
+        return "사용가능한 아이디입니다.";
+    }
 
     //유저 삭제
     public void userDelete() {
@@ -84,6 +92,7 @@ public class UserService {
         userRepository.deleteByUsername(username);
     }
 
+/* 안 쓸 거 같 음
     //회원 정보 조회
     public UserResponseDto UserView() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -94,5 +103,7 @@ public class UserService {
 
         return new UserResponseDto(user.getId(), user.getUsername(), user.getName(), user.getPassword());
     }
-} //ㅇ
+    */
+
+}
 
