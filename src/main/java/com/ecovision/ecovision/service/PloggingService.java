@@ -27,7 +27,7 @@ public class PloggingService {
     }
 
     //기록 생성 서비스
-    public PloggingResponseDto createPlogging(PloggingRequestDto ploggingRequestDto) {
+    public String createPlogging(PloggingRequestDto ploggingRequestDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username); //token
         if (user == null) {
@@ -44,14 +44,8 @@ public class PloggingService {
         plogging.setUser(user);
         ploggingRepository.save(plogging);
 
-        return new PloggingResponseDto(
-                plogging.getId(),
-                plogging.getDistance(),
-                plogging.getTrashCount(),
-                plogging.getLocation(),
-                plogging.getTime(),
-                plogging.getTimeStamp()
-        );
+        return "기록 생성이 완료됐습니다.";
+
 
     }
 
