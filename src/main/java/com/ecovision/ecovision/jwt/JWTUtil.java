@@ -46,4 +46,4 @@ public class JWTUtil {
                 .compact();
 
     }
-}
+};
