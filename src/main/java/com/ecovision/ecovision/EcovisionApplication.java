@@ -10,4 +10,4 @@ public class EcovisionApplication {
 		SpringApplication.run(EcovisionApplication.class, args);
 	}
 
-}
+};
