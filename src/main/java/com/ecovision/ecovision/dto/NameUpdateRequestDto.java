@@ -13,4 +13,4 @@ public class NameUpdateRequestDto {
 
     private String name;
 
-};
+}

@@ -22,4 +22,4 @@ public class TotalViewAndPloggingListDto {
 
     private List<PloggingResponseDto> ploggingList;
 
-};
+}

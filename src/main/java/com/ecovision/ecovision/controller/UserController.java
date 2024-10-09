@@ -79,13 +79,13 @@ public class UserController {
     public ResponseEntity<String> userDelete() {
         try {
             userService.userDelete();
-            return ResponseEntity.ok("Deleted");
+            return ResponseEntity.ok("회원 탈퇴 성공했습니다.");
         } catch (NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
 
-};
+}
 
 

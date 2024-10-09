@@ -24,4 +24,4 @@ public class PloggingResponseDto {
 
     private LocalDateTime timeStamp;
 
-};
+}
