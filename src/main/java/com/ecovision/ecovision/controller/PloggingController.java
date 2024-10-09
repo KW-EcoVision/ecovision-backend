@@ -25,17 +25,17 @@ public class PloggingController {
     @PostMapping("/record")
     public ResponseEntity<?> record(@RequestBody PloggingRequestDto requestDto) {
         try {
-        PloggingResponseDto response = ploggingService.createPlogging(requestDto);
+        String response = ploggingService.createPlogging(requestDto);
         totalViewService.createTotalPlogging(requestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response); //201
+            return ResponseEntity.status(HttpStatus.CREATED).body(response); //200
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404
         }
     }
 
     //회차별 기록 조회
-    @GetMapping("/view")
-    public ResponseEntity<?> view(@RequestParam(name = "id") Long id) {
+    @GetMapping("/view/{id}")
+    public ResponseEntity<?> view(@PathVariable("id") long id) {
         try {
             PloggingResponseDto response = ploggingService.ploggingViewById(id);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -76,4 +76,4 @@ public class PloggingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-};
+}
