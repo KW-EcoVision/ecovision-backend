@@ -13,4 +13,4 @@ public class ValiDateDto {
 
     private String username;
 
-}
+};

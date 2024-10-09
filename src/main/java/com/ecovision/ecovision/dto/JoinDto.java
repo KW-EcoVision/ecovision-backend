@@ -15,4 +15,4 @@ public class JoinDto {
     private String name;
 
     private String password;
-}
+};

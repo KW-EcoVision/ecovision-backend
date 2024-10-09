@@ -17,4 +17,4 @@ public class PloggingRequestDto {
 
     private int time;
 
-}
+};

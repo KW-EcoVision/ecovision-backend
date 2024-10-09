@@ -19,4 +19,4 @@ public class UserResponseDto {
     private String password;
 
 
-}
+};

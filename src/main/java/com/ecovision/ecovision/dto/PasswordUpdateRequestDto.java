@@ -13,4 +13,4 @@ public class PasswordUpdateRequestDto {
 
     private String password;
 
-}
+};
