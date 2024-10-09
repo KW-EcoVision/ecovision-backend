@@ -10,4 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface TotalViewRepository extends JpaRepository<TotalView, Long>{
 
     TotalView findByUser(User user);
-}
+};

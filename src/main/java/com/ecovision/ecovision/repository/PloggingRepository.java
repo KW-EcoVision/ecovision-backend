@@ -8,4 +8,4 @@ import org.springframework.stereotype.Repository;
 //ploggingRepository
 public interface PloggingRepository extends JpaRepository<Plogging, Long>{
 
-}
+};
