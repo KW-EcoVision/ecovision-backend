@@ -76,4 +76,4 @@ public class PloggingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-}
+};
