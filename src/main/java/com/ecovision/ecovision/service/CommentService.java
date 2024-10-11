@@ -31,7 +31,7 @@ public class CommentService {
 
     // 1. 댓글 저장
     @Transactional
-    public void saveComment(Long boardId, User currentUser, CommentRequestDto commentRequestDto) {
+    public void saveComment(User currentUser, CommentRequestDto commentRequestDto) {
         User user = userRepository.findById(currentUser.getId())
                 .orElseThrow(() -> { return new ResourceNotFoundException("사용자를 찾을 수 없습니다.");
                 });
@@ -40,7 +40,7 @@ public class CommentService {
             throw new CommentException("접근 권한이 없습니다.");
         }
 
-        Board optionalBoardEntity = boardRepository.findById(boardId)
+        Board optionalBoardEntity = boardRepository.findById(commentRequestDto.getBoardId())
                 .orElseThrow(() -> { return new ResourceNotFoundException("게시물을 찾을 수 없습니다.");
          });
 

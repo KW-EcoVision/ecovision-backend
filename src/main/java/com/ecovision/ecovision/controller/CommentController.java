@@ -1,6 +1,7 @@
 package com.ecovision.ecovision.controller;
 
 import com.ecovision.ecovision.Exception.ResourceNotFoundException;
+import com.ecovision.ecovision.dto.BoardRequestDto;
 import com.ecovision.ecovision.dto.CommentRequestDto;
 import com.ecovision.ecovision.dto.CommentResponseDto;
 import com.ecovision.ecovision.entity.User;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Getter @Setter @RequiredArgsConstructor
-@RequestMapping("/board/{boardId}/comment")
+@RequestMapping("/comment")
 @RestController
 
 public class CommentController {
@@ -28,8 +29,8 @@ public class CommentController {
     private final UserRepository userRepository;
 
     // 1. 댓글 등록
-    @PostMapping
-    public ResponseEntity<String> saveComment(@PathVariable Long boardId, @RequestBody CommentRequestDto commentRequestDto) {
+    @PostMapping("/post")
+    public ResponseEntity<String> saveComment(@RequestBody CommentRequestDto commentRequestDto) {
         // 인증된 사용자 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -39,13 +40,13 @@ public class CommentController {
             throw new ResourceNotFoundException("사용자가 존재하지 않습니다.");
         }
 
-        commentService.saveComment(boardId,currentUser,commentRequestDto);
+        commentService.saveComment(currentUser,commentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("댓글이 등록되었습니다.");
     }
 
     // 2. 댓글 삭제
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
         // 인증된 사용자 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -54,7 +55,6 @@ public class CommentController {
         if (currentUser == null) {
             throw new ResourceNotFoundException("사용자가 존재하지 않습니다.");
         }
-
 
         commentService.deleteComment(currentUser,commentId);
         return ResponseEntity.status(HttpStatus.OK).body("댓글이 삭제되었습니다.");
@@ -62,9 +62,12 @@ public class CommentController {
 
     // 3. 댓글 전체 목록 조회
     @GetMapping
-    public ResponseEntity<List<CommentResponseDto>> findAllComment(@PathVariable Long boardId) {
-        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(boardId);
+    public ResponseEntity<List<CommentResponseDto>> findAllComment(@RequestBody CommentRequestDto commentRequestDto) {
+        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(commentRequestDto.getBoardId());
 
+        if (commentResponseDtos.isEmpty()){
+            throw new ResourceNotFoundException("댓글이 존재하지 않습니다.");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDtos);
     }
 
@@ -73,6 +76,9 @@ public class CommentController {
     public ResponseEntity<CommentResponseDto> findCommentById(@PathVariable Long commentId) {
         CommentResponseDto commentResponseDto = commentService.findCommentById(commentId);
 
+        if (commentResponseDto == null){
+            throw new ResourceNotFoundException("해당 댓글이 존재하지 않습니다");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDto);
         }
     }
