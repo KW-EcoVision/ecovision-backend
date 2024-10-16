@@ -38,7 +38,7 @@ public class PloggingController {
     public ResponseEntity<?> view(@PathVariable("id") long id) {
         try {
             PloggingResponseDto response = ploggingService.ploggingViewById(id);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -49,7 +49,7 @@ public class PloggingController {
     public ResponseEntity<?> listView() {
         try {
             List<PloggingViewResponseDto> response = ploggingService.ploggingListViewByUsername();
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -71,7 +71,7 @@ public class PloggingController {
     public ResponseEntity<?> totalAndListView() {
         try {
             TotalViewAndPloggingListDto response = totalViewService.totalViewAndPloggingListByUsername();
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
