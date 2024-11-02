@@ -32,6 +32,7 @@ public class CommentService {
     // 1. 댓글 저장
     @Transactional
     public void saveComment(User currentUser, CommentRequestDto commentRequestDto) {
+        Long boardId = commentRequestDto.getBoardId();
         User user = userRepository.findById(currentUser.getId())
                 .orElseThrow(() -> { return new ResourceNotFoundException("사용자를 찾을 수 없습니다.");
                 });
@@ -40,9 +41,9 @@ public class CommentService {
             throw new CommentException("접근 권한이 없습니다.");
         }
 
-        Board optionalBoardEntity = boardRepository.findById(commentRequestDto.getBoardId())
+        Board optionalBoardEntity = boardRepository.findById(boardId)
                 .orElseThrow(() -> { return new ResourceNotFoundException("게시물을 찾을 수 없습니다.");
-         });
+                });
 
         Comment comment = Comment.builder()
                 .writer(currentUser.getName())
@@ -81,13 +82,13 @@ public class CommentService {
 
     // 4. 댓글 목록 조회
     @Transactional
-    public List<CommentResponseDto> findAllComment(Long boardId) {
+    public List<CommentResponseDto> findAllComment(CommentRequestDto commentRequestDto) {
+        Long boardId = commentRequestDto.getBoardId();
         Board optionalBoardEntity = boardRepository.findById(boardId)
                 .orElseThrow(() -> { return new ResourceNotFoundException("게시글이 존재하지 않습니다.");
-        });
+                });
 
-        Board board = boardRepository.findById(boardId).get();
-        List<Comment> commentList = commentRepository.findAllByBoardOrderByIdDesc(board);
+        List<Comment> commentList = commentRepository.findAllByBoardOrderByIdDesc(optionalBoardEntity);
 
         List<CommentResponseDto> commentDtoList = new ArrayList<>();
         for (Comment comment: commentList) {

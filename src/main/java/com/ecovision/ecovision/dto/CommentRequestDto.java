@@ -8,6 +8,5 @@ import lombok.*;
 
 public class CommentRequestDto {
     private String content;
-    @JsonProperty("board_id")
     private Long boardId; //외래키
 }

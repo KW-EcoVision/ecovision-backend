@@ -1,7 +1,6 @@
 package com.ecovision.ecovision.controller;
 
 import com.ecovision.ecovision.Exception.ResourceNotFoundException;
-import com.ecovision.ecovision.dto.BoardRequestDto;
 import com.ecovision.ecovision.dto.CommentRequestDto;
 import com.ecovision.ecovision.dto.CommentResponseDto;
 import com.ecovision.ecovision.entity.User;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Getter @Setter @RequiredArgsConstructor
-@RequestMapping("/comment")
+@RequestMapping("/board/comment")
 @RestController
 
 public class CommentController {
@@ -29,7 +28,7 @@ public class CommentController {
     private final UserRepository userRepository;
 
     // 1. 댓글 등록
-    @PostMapping("/post")
+    @PostMapping
     public ResponseEntity<String> saveComment(@RequestBody CommentRequestDto commentRequestDto) {
         // 인증된 사용자 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -56,6 +55,7 @@ public class CommentController {
             throw new ResourceNotFoundException("사용자가 존재하지 않습니다.");
         }
 
+
         commentService.deleteComment(currentUser,commentId);
         return ResponseEntity.status(HttpStatus.OK).body("댓글이 삭제되었습니다.");
     }
@@ -63,11 +63,8 @@ public class CommentController {
     // 3. 댓글 전체 목록 조회
     @GetMapping
     public ResponseEntity<List<CommentResponseDto>> findAllComment(@RequestBody CommentRequestDto commentRequestDto) {
-        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(commentRequestDto.getBoardId());
+        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(commentRequestDto);
 
-        if (commentResponseDtos.isEmpty()){
-            throw new ResourceNotFoundException("댓글이 존재하지 않습니다.");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDtos);
     }
 
@@ -76,10 +73,7 @@ public class CommentController {
     public ResponseEntity<CommentResponseDto> findCommentById(@PathVariable Long commentId) {
         CommentResponseDto commentResponseDto = commentService.findCommentById(commentId);
 
-        if (commentResponseDto == null){
-            throw new ResourceNotFoundException("해당 댓글이 존재하지 않습니다");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDto);
-        }
     }
+}
 
