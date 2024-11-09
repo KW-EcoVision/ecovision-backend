@@ -34,7 +34,7 @@ public class UserController {
     public ResponseEntity<?> ValiDateProcess(@RequestBody ValiDateDto valiDateDto) {
         try {
             String response = userService.valiDateProcess(valiDateDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -56,7 +56,7 @@ public class UserController {
     public ResponseEntity<?> userNameUpdate(@RequestBody NameUpdateRequestDto nameUpdateRequestDto) {
         try {
             String response = userService.NameUpdateDetails(nameUpdateRequestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -67,7 +67,7 @@ public class UserController {
     public ResponseEntity<?> userPasswordUpdate(@RequestBody PasswordUpdateRequestDto passwordUpdateRequestDto) {
         try {
             String response = userService.PasswordUpdateDetails(passwordUpdateRequestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (NullPointerException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

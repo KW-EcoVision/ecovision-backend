@@ -5,11 +5,15 @@ package com.ecovision.ecovision.service;
 import com.ecovision.ecovision.dto.*;
 import com.ecovision.ecovision.entity.User;
 import com.ecovision.ecovision.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;

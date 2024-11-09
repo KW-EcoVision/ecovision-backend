@@ -7,6 +7,9 @@ import com.ecovision.ecovision.entity.Plogging;
 import com.ecovision.ecovision.entity.User;
 import com.ecovision.ecovision.repository.PloggingRepository;
 import com.ecovision.ecovision.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 
 
 @Service
+@Transactional
 public class PloggingService {
 
     private final PloggingRepository ploggingRepository;
