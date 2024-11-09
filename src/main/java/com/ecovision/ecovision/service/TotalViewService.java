@@ -114,6 +114,7 @@ public class TotalViewService {
                     plogging.getTime(),
                     plogging.getTimeStamp()
             );
+
             ploggingResponseList.add(ploggingResponseDto);
         }
 

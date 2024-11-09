@@ -1,15 +1,17 @@
 package com.ecovision.ecovision.dto;
 
 
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//total view(sum) + total view(list)
+//total view(sum) + total view(list) + level
 public class TotalViewAndPloggingListDto {
 
     private Long id;
@@ -20,6 +22,10 @@ public class TotalViewAndPloggingListDto {
 
     private int totalCount;
 
+    private int level;
+
     private List<PloggingResponseDto> ploggingList;
+
+
 
 }
