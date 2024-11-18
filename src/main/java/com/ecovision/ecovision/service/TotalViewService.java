@@ -21,13 +21,14 @@ import java.util.List;
 public class TotalViewService {
     private final UserRepository userRepository;
     private final TotalViewRepository totalViewRepository;
+
     public TotalViewService(UserRepository userRepository, TotalViewRepository totalViewRepository) {
         this.userRepository = userRepository;
         this.totalViewRepository = totalViewRepository;
     }
 
     //기록 생성 controller -> 기록 생성 할 때 마다 (total view +=) 저장
-    public TotalViewResponseDto createTotalPlogging(PloggingRequestDto requestDto){
+    public TotalViewResponseDto createTotalPlogging(PloggingRequestDto requestDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -78,7 +79,7 @@ public class TotalViewService {
 
     }
 
-    //total view(list) + total view (sum)
+    //total view(list) + total view (sum) + level
     public TotalViewAndPloggingListDto totalViewAndPloggingListByUsername() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
@@ -88,7 +89,20 @@ public class TotalViewService {
 
         TotalView totalView = totalViewRepository.findByUser(user);
         if (totalView == null) {
-            throw new NullPointerException("기록이 존재하지 않습니다.");
+            totalView = new TotalView();
+            totalView.setLevel(1);
+        }
+
+        int totalScore = totalView.getTotalDistance() / 1000 + totalView.getTotalTime() / 60 + totalView.getTotalCount();
+
+        if (totalScore >= 1000) {
+            totalView.setLevel(4);
+        } else if (totalScore >= 500) {
+            totalView.setLevel(3);
+        } else if (totalScore >= 200) {
+            totalView.setLevel(2);
+        } else {
+            totalView.setLevel(1);
         }
 
         List<Plogging> ploggingList = user.getPloggingEntities();
@@ -102,6 +116,7 @@ public class TotalViewService {
                     plogging.getTime(),
                     plogging.getTimeStamp()
             );
+
             ploggingResponseList.add(ploggingResponseDto);
         }
 
@@ -110,7 +125,10 @@ public class TotalViewService {
                 totalView.getTotalDistance(),
                 totalView.getTotalTime(),
                 totalView.getTotalCount(),
+                totalView.getLevel(),
                 ploggingResponseList
         );
     }
-};
+
+}
+

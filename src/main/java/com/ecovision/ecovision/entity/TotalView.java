@@ -27,7 +27,10 @@ public class TotalView {
     @Column(name = "total_count")
     private int totalCount;
 
+    private int level;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }
+

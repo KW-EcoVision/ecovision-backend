@@ -6,7 +6,9 @@ import com.ecovision.ecovision.service.TotalViewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/plogging")
@@ -16,7 +18,8 @@ public class PloggingController {
     //의존성 주입
     private final PloggingService ploggingService;
     private final TotalViewService totalViewService;
-    public PloggingController(PloggingService ploggingService, TotalViewService totalViewService) {
+    public PloggingController(PloggingService ploggingService,
+                              TotalViewService totalViewService) {
         this.ploggingService = ploggingService;
         this.totalViewService = totalViewService;
     }
@@ -25,9 +28,9 @@ public class PloggingController {
     @PostMapping("/record")
     public ResponseEntity<?> record(@RequestBody PloggingRequestDto requestDto) {
         try {
-        String response = ploggingService.createPlogging(requestDto);
-        totalViewService.createTotalPlogging(requestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response); //200
+            String response = ploggingService.createPlogging(requestDto);
+            totalViewService.createTotalPlogging(requestDto);
+            return ResponseEntity.status(HttpStatus.OK).body(response); //200
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); //404
         }
@@ -60,7 +63,7 @@ public class PloggingController {
     public ResponseEntity<?> totalView() {
         try {
             TotalViewResponseDto response = totalViewService.ploggingTotalViewByUsername();
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -76,4 +79,5 @@ public class PloggingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
 }
