@@ -95,9 +95,6 @@ public class BoardController {
     public ResponseEntity<List<BoardResponseDto>> findAllBoard() {
         List<BoardResponseDto> boardResponseDtos = boardService.findAllBoard();
 
-        if (boardResponseDtos.isEmpty()) {
-            throw new ResourceNotFoundException("게시물이 존재하지 않습니다.");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(boardResponseDtos);
     }
 
@@ -105,10 +102,6 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ResponseEntity<BoardResponseDto> findByBoardId(@PathVariable Long boardId) {
         BoardResponseDto boardResponseDto = boardService.findByBoardId(boardId);
-
-        if(boardResponseDto == null) {
-            throw new ResourceNotFoundException("해당 게시물이 존재하지 않습니다.");
-        }
 
         return ResponseEntity.status(HttpStatus.OK).body(boardResponseDto);
     }
