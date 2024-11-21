@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Getter @Setter @RequiredArgsConstructor
-@RequestMapping("/board/comment")
+@RequestMapping("/board/{boardId}/comment")
 @RestController
 
 public class CommentController {
@@ -29,7 +29,7 @@ public class CommentController {
 
     // 1. 댓글 등록
     @PostMapping
-    public ResponseEntity<String> saveComment(@RequestBody CommentRequestDto commentRequestDto) {
+    public ResponseEntity<String> saveComment(@PathVariable Long boardId, @RequestBody CommentRequestDto commentRequestDto) {
         // 인증된 사용자 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -39,13 +39,13 @@ public class CommentController {
             throw new ResourceNotFoundException("사용자가 존재하지 않습니다.");
         }
 
-        commentService.saveComment(currentUser,commentRequestDto);
+        commentService.saveComment(boardId,currentUser,commentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("댓글이 등록되었습니다.");
     }
 
     // 2. 댓글 삭제
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<String> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
         // 인증된 사용자 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -62,8 +62,8 @@ public class CommentController {
 
     // 3. 댓글 전체 목록 조회
     @GetMapping
-    public ResponseEntity<List<CommentResponseDto>> findAllComment(@RequestBody CommentRequestDto commentRequestDto) {
-        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(commentRequestDto);
+    public ResponseEntity<List<CommentResponseDto>> findAllComment(@PathVariable Long boardId) {
+        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(boardId);
 
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDtos);
     }

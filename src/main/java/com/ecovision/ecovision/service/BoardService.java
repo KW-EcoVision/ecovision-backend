@@ -78,6 +78,7 @@ public class BoardService {
     public String deleteBoard(User currentUser, Long boardId) {
         User user = userRepository.findById(currentUser.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("로그인이 필요합니다."));
+//        user.getBoardEntities();
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new ResourceNotFoundException("게시글이 존재하지 않습니다."));
 

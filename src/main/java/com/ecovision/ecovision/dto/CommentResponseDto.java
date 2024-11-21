@@ -15,8 +15,8 @@ public class CommentResponseDto {
     private String content;
     @JsonProperty("write_time")
     private LocalDateTime writeTime;
-    @JsonProperty("board_id")
-    private Long boardId; //외래키
+    @JsonProperty("board_writer")
+    private String boardWriter;
 
     public static CommentResponseDto toCommentDto(Comment comment) {
         CommentResponseDto commentResponseDto = new CommentResponseDto();
@@ -24,7 +24,9 @@ public class CommentResponseDto {
         commentResponseDto.setWriter(comment.getWriter());
         commentResponseDto.setContent(comment.getContent());
         commentResponseDto.setWriteTime(comment.getWriteTime());
-        commentResponseDto.setBoardId(comment.getBoard() != null ? comment.getBoard().getId() : null);
+        commentResponseDto.setBoardWriter(comment.getBoard() != null && comment.getBoard().getUser() != null
+                ? comment.getBoard().getUser().getName()
+                : null);
         return commentResponseDto;
 
     }
