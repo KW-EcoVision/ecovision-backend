@@ -39,7 +39,7 @@ public class CommentController {
             throw new ResourceNotFoundException("사용자가 존재하지 않습니다.");
         }
 
-        commentService.saveComment(boardId,currentUser,commentRequestDto);
+        commentService.saveComment(currentUser,commentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("댓글이 등록되었습니다.");
     }
 
@@ -63,7 +63,11 @@ public class CommentController {
     // 3. 댓글 전체 목록 조회
     @GetMapping
     public ResponseEntity<List<CommentResponseDto>> findAllComment(@PathVariable Long boardId) {
-        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(boardId);
+
+        CommentRequestDto commentRequestDto = new CommentRequestDto();
+        commentRequestDto.setBoardId(boardId);
+
+        List<CommentResponseDto> commentResponseDtos = commentService.findAllComment(commentRequestDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDtos);
     }

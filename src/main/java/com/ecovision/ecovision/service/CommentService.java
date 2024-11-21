@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final UserService userservice;
+    private final UserService userService;
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
 
