@@ -49,7 +49,7 @@ public class BoardService {
 
     // 2. 게시글 전체 조회
     public List<BoardResponseDto> findAllBoard() {
-        List<Board> boardList = boardRepository.findAll();
+        List<Board> boardList = boardRepository.findAllOrderByCreatedAtDesc();
 
         List<BoardResponseDto> boardDtoList = new ArrayList<>();
         for (Board board : boardList) {
