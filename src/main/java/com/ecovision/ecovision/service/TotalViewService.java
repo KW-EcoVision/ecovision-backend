@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -113,11 +114,11 @@ public class TotalViewService {
                     plogging.getTrashCount(),
                     plogging.getLocation(),
                     plogging.getTime(),
-                    plogging.getTimeStamp()
-            );
+                    plogging.getTimeStamp());
 
             ploggingResponseList.add(ploggingResponseDto);
         }
+        Collections.reverse(ploggingResponseList);
 
         return new TotalViewAndPloggingListDto(
                 totalView.getId(),

@@ -88,7 +88,7 @@ public class CommentService {
                 .orElseThrow(() -> { return new ResourceNotFoundException("게시글이 존재하지 않습니다.");
                 });
 
-        List<Comment> commentList = commentRepository.findAllByBoardOrderByIdDesc(optionalBoardEntity);
+        List<Comment> commentList = commentRepository.findAllByBoardOrderByWriteTimeAsc(optionalBoardEntity);
 
         List<CommentResponseDto> commentDtoList = new ArrayList<>();
         for (Comment comment: commentList) {
