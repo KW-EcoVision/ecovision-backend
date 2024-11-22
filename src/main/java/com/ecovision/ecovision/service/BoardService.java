@@ -104,7 +104,9 @@ public class BoardService {
             if (boardRequestDto.getContent() != null) {
                 board.setContent(boardRequestDto.getContent());
             }
-
+            boardRepository.save(board);
+        } else {
+            throw new AccessDeniedException("현재 사용자는 게시물을 수정할 권한이 없습니다.");
         }
     }
 }
