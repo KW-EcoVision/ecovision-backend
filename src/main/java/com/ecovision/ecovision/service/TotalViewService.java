@@ -89,8 +89,7 @@ public class TotalViewService {
 
         TotalView totalView = totalViewRepository.findByUser(user);
         if (totalView == null) {
-            totalView = new TotalView();
-            totalView.setLevel(1);
+            throw new NullPointerException("기록이 존재하지 않습니다.");
         }
 
         int totalScore = totalView.getTotalDistance() / 1000 + totalView.getTotalTime() / 60 + totalView.getTotalCount();
